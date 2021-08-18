@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <title> Studenti </title>
+   <link rel="stylesheet" href="studenti.css">
+</head>
+
+<body id='bodystyle'>
+   <div id='input'>
+      <h3>Unesite studente: (format csv: Ime Prezime,broj indeksa)</h3>
+      <!-- <form> -->
+      <textarea id="txtarea" name="ime" rows="4" cols="50"></textarea>
+      <select name="grupa" id="grupa">
+         <option value="" selected disabled hidden>Odaberite grupu</option>
+         <option value="BWTgrupa1">BWTgrupa1</option>
+         <option value="BWTgrupa2">BWTgrupa2</option>
+         <option value="RPgrupa1">RPgrupa1</option>
+         <option value="RPgrupa2">RPgrupa2</option>
+         <option value="RMAgrupa1">RMAgrupa1</option>
+         <option value="RMAgrupa2">RMAgrupa2</option>
+         <option value="FWTgrupa1">FWTgrupa1</option>
+         <option value="FWTgrupa2">FWTgrupa2</option>
+      </select>
+      <input type="submit" value="Pošalji" onclick="getGrupaValue()">
+      <!-- </form> -->
+   </div>
+</body>
+
+<script>
+   function getGrupaValue() {
+      var grupa = document.getElementById("grupa").value;
+      var csv = document.getElementById("txtarea").value;
+
+      var model = {
+         "csv": csv,
+         "grupa": grupa
+      }
+
+      var data = JSON.stringify(model);
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+      xhr.open("POST", "http://localhost:8080/v2/student/dodajStudente");
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.addEventListener("readystatechange", function () {
+         if (this.readyState === 4) {
+            console.log(this.responseText);
+            document.getElementById("txtarea").value = this.responseText.toString();
+         }
+      });
+      
+      xhr.send(data);
+   }
+</script>
+
+</html>
