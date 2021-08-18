@@ -39,21 +39,30 @@
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
    <script>
+      //na klik buttona sa Id-jem "myButton" saljem get zahtjev
       $('.myButton').click(function () {
          $.get('http://localhost:8080/raspored', {}, function (data) {
+            //ovdje vrsim append na "ubaciOdgovor" div sa onim sto dobijem kao response od metode
             document.getElementById("ubaciOdgovor").innerHTML = data;
          });
       });
 
+      //na klik buttona sa Id-jem "myButtonPoDanu" saljem get zahtjev sa query parametrima "dan" i "sort"
       $('.myButtonPoDanu').click(function () {
          $.get('http://localhost:8080/raspored?dan=srijeda&sort=Ddan', {}, function (data) {
+            //ovdje vrsim append na "ubaciOdgovor" div sa onim sto dobijem kao response od metode
             document.getElementById("ubaciOdgovor").innerHTML = data;
          });
       });
+
+     // document.getElementById("proba").innerHTML = "tabela";
    </script>
 
    <script>
       function validirajFormu() {
+         /*
+         ovdje dohvatam vrijednosti input polja kako bi ih validirali (polja ne smiju biti prazna naprimjer)
+         */
          var nazivPredmeta = document.forms["unosRasporeda"]["nazivPredmeta"].value;
          var aktivnost = document.forms["unosRasporeda"]["aktivnost"].value;
          var dan = document.forms["unosRasporeda"]["dan"].value;
@@ -65,6 +74,7 @@
             return false;
          }
 
+         //json objekat koji saljemo sa requestom
          var obj = {
             nazivPredmeta: nazivPredmeta,
             aktivnost: aktivnost,
@@ -73,6 +83,7 @@
             vrijemeDo: vrijemeDo
          };
 
+         //slanje requesta
          var xhttp = new XMLHttpRequest();
          xhttp.onreadystatechange = function () {
             alert(this.responseText)

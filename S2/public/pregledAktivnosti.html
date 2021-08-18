@@ -1,0 +1,50 @@
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+   <!-- <script src="pregledAktivnosti.js"></script> -->
+</head>
+
+<body onload="loadData()">
+   <script src="ajaxSortiranje.js"></script>
+   <script src="pregledAktivnosti.js"></script>
+   <!-- <script type="module" src="pregledAktivnosti.js"></script> -->
+   <table class="table table-striped table-hover">
+      <thead>
+         <tr>
+            <th onclick="sortNaziv()">
+               Naziv
+               <span id="iconNaziv">
+                  <i class="fa fa-arrow-down"></i>
+               </span>
+               <!-- <script>
+                  if (ascDescNaziv == true) document.write("<i class=\"fa fa-arrow-down\"></i>")
+                  else if (ascDescNaziv == false) document.write("<i class=\"fa fa-arrow-up\"></i>")
+               </script> -->
+            </th>
+            <th>Aktivnost</th>
+            <th onclick="sortDan()">
+               Dan
+               <span id="iconDan">
+                  <i class="fa fa-arrow-down"></i>
+               </span>
+            </th>
+            <th>Početak</th>
+            <th>Kraj</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td></td>
+         </tr>
+      </tbody>
+   </table>
+</body>
+
+</html>
