@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Unos rasporeda</title>
+
+   <!-- Bootstrap CSS -->
+   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+   <!--[if lt IE 9]>
+         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
+         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+</head>
+
+<body>
+   <form name="unosRasporeda" action="http://localhost:8080/raspored" onsubmit="return validirajFormu()" method="post">
+      Naziv predmeta: <input type="text" name="nazivPredmeta">
+      Aktivnost: <input type="text" name="aktivnost">
+      Dan: <input type="text" name="dan">
+      Vrijeme od: <input type="time" name="vrijemeOd">
+      Vrijeme do: <input type="time" name="vrijemeDo">
+      <input type="submit" value="Pošalji raspored">
+   </form>
+   <br>
+   <button class="myButton">Dohvati raspored</button>
+   <button class="myButtonPoDanu">Dohvati raspored po danu</button>
+   <div id="ubaciOdgovor">
+
+   </div>
+   <!-- jQuery -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <!-- Bootstrap JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+   <script>
+      $('.myButton').click(function () {
+         $.get('http://localhost:8080/raspored', {}, function (data) {
+            document.getElementById("ubaciOdgovor").innerHTML = data;
+         });
+      });
+
+      $('.myButtonPoDanu').click(function () {
+         $.get('http://localhost:8080/raspored?dan=srijeda&sort=Ddan', {}, function (data) {
+            document.getElementById("ubaciOdgovor").innerHTML = data;
+         });
+      });
+   </script>
+
+   <script>
+      function validirajFormu() {
+         var nazivPredmeta = document.forms["unosRasporeda"]["nazivPredmeta"].value;
+         var aktivnost = document.forms["unosRasporeda"]["aktivnost"].value;
+         var dan = document.forms["unosRasporeda"]["dan"].value;
+         var vrijemeOd = document.forms["unosRasporeda"]["vrijemeOd"].value;
+         var vrijemeDo = document.forms["unosRasporeda"]["vrijemeDo"].value;
+
+         if (nazivPredmeta == "" || aktivnost == "" || dan == "") {
+            alert("Naziv predmeta ili aktivnost ili dan ne smiju biti prazni!");
+            return false;
+         }
+
+         var obj = {
+            nazivPredmeta: nazivPredmeta,
+            aktivnost: aktivnost,
+            dan: dan,
+            vrijemeOd: vrijemeOd,
+            vrijemeDo: vrijemeDo
+         };
+
+         var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function () {
+            alert(this.responseText)
+            if (this.readyState == 4 && this.status == 200) {
+               alert(this.responseText)
+            }
+         };
+         xhttp.open("POST", "http://localhost:8080", true)
+         xhttp.setRequestHeader("Content-type", "application/json");
+         xhttp.send(obj)
+      }
+   </script>
+</body>
+
+</html>
